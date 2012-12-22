@@ -1,0 +1,79 @@
+\documentclass[a4paper]{report}
+
+\usepackage{ amssymb , enumerate , amsfonts} % math stuff
+\usepackage{ hyperref } % index , url
+\usepackage{ minted  , color} % display code
+\usepackage{ ./subfiles/subfiles}
+
+\newminted{cpp}{ mathescape , linenos, numbersep=5pt, gobble=2,
+                 frame=lines, framesep =2mm }
+
+\definecolor{type}{RGB}{176, 5, 64}
+\newcommand{\type}[1]{\textcolor{type}{#1}}
+
+% page properties
+\usepackage[margin=1.5in]{geometry}
+\raggedright     % Do not right-justify
+\parindent 0pt   % make block paragraphs
+\parskip 8pt
+
+\begin{document}
+\title{Data Structures}
+\author{Michele Riccardo Esposito}
+\maketitle
+
+\pagenumbering{roman}
+\setcounter{page}{2}
+\tableofcontents
+
+% \begin{enumerate}
+%   \item Introduction
+%     \begin{itemize}
+%       \item Purpose of class
+%       \item Structure
+%       \item Intro to C++
+%       \item {\bf Small C++ assignment}
+%     \end{itemize}
+%   \item Basic C++
+%     \begin{itemize}
+%       \item Pointers and reference
+%       \item Memory management
+%     \end{itemize}
+%   \item More C++
+%     \begin{itemize}
+%       \item Classes
+%       \item Big 3
+%       \item Templates
+%       \item {\bf Assignment}
+%     \end{itemize}
+%   \item Math review 
+%     \begin{itemize}
+%       \item Big O notation
+%       \item Induction
+%       \item Recursion
+%       \item {\bf Selected math problems}
+%     \end{itemize}
+%   \item Stacks and Queue
+%     \begin{itemize}
+%       \item Purpose
+%       \item Implementation
+%       \item Runtime
+%       \item Usage
+%       \item Implement
+%     \end{itemize}
+%   \item Single Linked Lists
+%   \item Double Linked Lists
+%     \begin{itemize}
+%       \item {\bf Merge sort!}
+%     \end{itemize}
+%   \item Binary Sort Tree
+%   \item AVL tree
+%   \item B-tree
+%   \item Heaps
+%   \item Hashes
+% \end{enumerate}
+
+\pagenumbering{arabic}
+\chapter{Introduction}
+\subfile{lesson1/lesson1.tex}
+\end{document}

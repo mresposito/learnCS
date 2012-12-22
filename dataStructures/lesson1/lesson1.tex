@@ -1,0 +1,136 @@
+\documentclass[../notebook.tex]{../subfiles/subfiles} 
+
+\linespread{1.2} % line spread
+\begin{document}
+\begin{center}
+
+\end{center}
+
+\section{ Let's get started }
+\subsection{Purpose of the class} % (fold)
+\label{sec:Purpose of the class}
+Welcome to the data structure class. During this class, you will learn the most used structures is computer science. It is very important to know them for the following reasons:
+\begin{enumerate}
+  \item Data structures are a must-know for every computer scientist and programmer.
+  \item 90\% of interview questions for software engineering position are about data structures.
+  \item Will significantly improve your programming skill, and take your employability to the next level.
+\end{enumerate}
+By the end of this class, you will have a thorough understanding of the most useful data structures. For every data structure that I will cover in this class, you will learn how to use them, how to implement them, and when to use them, as well as some use case for the data structures. \\
+% section Purpose of the class (end)
+\subsection{Structure} % (fold)
+\label{sec:Structure}
+For most of the classes, you will be given a programming assignment, which I will refer to as {\bf Machine Problem(MP)}. MPs are a wonderful way for you to understand your data structures inside out. You will be asked to implement the structures, and use them in some significant way. I expect you to have some programming experience prior to this class. We will be moving fast, so it is important that you have some prior experience. \\
+The MPs will be in C++ for the following reasons:
+\begin{itemize}
+  \item One of the most influential programming language of all time. A must know for every computer scientist.
+  \item Allows you capillary memory management. Very important when dealing with data structures.
+  \item Lower level than dynamic languages. You will be able to understand many more things about how a computer actually works.
+\end{itemize}
+You are not required to know C++ before this class, although it will help. During the first two lectures, I will be covering some of the most important aspects of C++. So, lets dive straight into C++, and lets take a look at some code.
+% Structure (end)
+\subsection{Intro to C++} % (fold)
+\label{sec:Intro to C++}
+C++ was developed on top of C, in order to add Object Oriented features to C. C++ also comes with a useful collections of data structures and functions, which is called {\bf Standard Template Library (STD)}. Lets dive our first C++ program:
+\inputminted[linenos, frame=lines]{cpp } {helloWorld.cpp}
+In order to compile this code, type in your terminal:
+\mint{python}| g++ -o hello helloWorld.cpp |
+and then run the executable {\bf hello} by 
+\mint{python}| ./hello |
+Congratulations! You made your first C++ program. Lets now move to a more interesting example. Here is an implementation of a Fibonacci function:
+\begin{cppcode}
+  int fibonacci(int n) {
+    if ( n == 0 || n == 1 ) 
+        return n;
+ 
+    int fib1 = 0; 
+    int fib2 = 1;
+    int fib;
+ 
+    for ( int i = 2; i < n; i++ ) 
+    {
+        fib = fib1 + fib2;
+        fib1 = fib2;
+        fib2 = fib;
+    }
+    return fib;
+  }
+\end{cppcode}
+Now, lets analyze this code:
+\begin{enumerate}
+  \item Every {\bf expression} in C++ needs to end with a semicolon.
+  \item Blocks of code need to be wrapped with curly braces.
+  \item On line \emph{2}, the $||$ operator means {\bf logic or}.
+  \item C++ is a \href{http://www.sitepoint.com/typing-versus-dynamic-typing/}{\underline{static typed}} language. That is, you have to declare a variable type before you use it. Notice, that the {\bf fibonacci} function returns a value of type \type{int}. Likewise, all the variables defined have a associated type. C++ has the following primitive types: \\
+
+    \begin{tabular}{c || c | c | c }
+      {\bf Type name} & {\bf Translation } & {\bf Values} & {\bf Dimension in bit} \\
+
+      \hline
+      \hline
+      \type{bool} & Boolean&  true, false  & 1 \\
+      \hline
+      \type{char} & Character& $ [ -2^{4}\dots 2^{4}]$ & 8 \\
+      \hline
+      \type{short} & Integer& $ [ -2^{8}\dots 2^{8}]$ &16 \\
+      \hline
+      \type{int} & Integer & $[ -2^{16}\dots 2^{16}]$ & 32 \\
+      \hline
+      \type{float} & Floating Point &  & 4\\
+      \hline
+      \type{double} & Floating Point &  & 8\\
+      \hline
+      \type{void} & Null &  & \\
+
+    \end{tabular} \\ 
+    Converting from one type to another is called {\bf casting}.
+  \item The loop on line \emph{9} can be decomposed as:
+    \begin{cppcode}
+      int i = 2;
+      while ( i < n )
+      {
+        /* do stuff */
+        i++;
+      }
+    \end{cppcode}
+    where $i++$ is equivalent to $i = i+1$ or $i += 1$.
+\end{enumerate}
+You can also have multiple variable loops, such as
+\begin{cppcode}
+  for ( int i =0, int j=3; i < n, j++, i ++ )
+\end{cppcode}
+For every iteration, both $j$ and $i$ will increase. Here is a table of operators for C++:\\
+\begin{tabular}{|c | c | c |}
+  \hline
+  {\bf Operator} & {\bf Meaning} & {\bf Example} \\ 
+  \hline
+  $++$& Increase by one & $i++;$  \\
+  \hline
+  $--$& Decrease by one & $i--;$  \\
+  \hline
+  $\&\&$ & Logic and & $ i$ \&\& $false  $ will always return $false$ \\
+  \hline
+  $||$ & Logic or & $ i$ $||$ $true  $ will always return $true$ \\
+  $!$ & Logic negation &  $!0 == 1  $ will always return $true$ \\
+  \hline
+\end{tabular}\\
+
+Also, we have the basic math operators, such as $+,-,*,/\ $.\\
+In C++ there are two different types of arrays. The first type, are arrays that cannot change their length, and are called static arrays. The second type can change their length, and are called dynamic.\\
+Here is an example on how to use a static array:
+\begin{cppcode}
+  int array [5]; // creates array of 5. not initialized
+  int five  [5] = { 0, 1, 2, 3, 4 }; // you can initialize arrays this way
+
+  for( int i; i < 5, i++ )
+  {
+    count << five[i] << "  "; // will print 0 1 2 3 4
+    array[i] = i; // initialize array
+  }
+  // by the end of the loop, array == five
+\end{cppcode}
+% subsection Intro to C++ (end)
+\subsection{First C++ assignment} % (fold)
+\label{sub:First C++ assignment}
+Lets get some practice. Open with your favorite editor the file 'snippets.cpp'. You will find several functions that need to be completed. You may notice that I have already created test cases, so that you can verify correctness of your code. Good luck!
+% subsection First C++ assignment (end)
+\end{document}
