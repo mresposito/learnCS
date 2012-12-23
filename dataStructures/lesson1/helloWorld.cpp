@@ -5,7 +5,8 @@
 #include <iostream>  // import print functions. 
 using namespace std; // we will be using std functions
 
-int main () // main will be always executed first.
+// main will be always executed first.
+int main ( int argc, const char * argv[] ) 
 { //  This is the entry point of our program.
   cout << "Hello World" << endl; // print to console
   return 0; 

@@ -120,13 +120,14 @@ Here is an example on how to use a static array:
 \begin{cppcode}
   int array [5]; // creates array of 5. not initialized
   int five  [5] = { 0, 1, 2, 3, 4 }; // you can initialize arrays this way
+  //int five [] = { 0, 1, 2, 3, 4 }; this is also valid
 
-  for( int i; i < 5, i++ )
+  for( int i=0; i < 5; i++ )
   {
-    count << five[i] << "  "; // will print 0 1 2 3 4
+    cout << five[i] << "  "; // will print 0 1 2 3 4
     array[i] = i; // initialize array
   }
-  // by the end of the loop, array == five
+  return 0; 
 \end{cppcode}
 % subsection Intro to C++ (end)
 \subsection{First C++ assignment} % (fold)
