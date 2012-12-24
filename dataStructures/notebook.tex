@@ -1,15 +1,26 @@
 \documentclass[a4paper]{report}
 
 \usepackage{ amssymb , enumerate , amsfonts} % math stuff
-\usepackage{ hyperref } % index , url
+\usepackage{ hyperref, graphicx } % index , url
 \usepackage{ minted  , color} % display code
 \usepackage{ subfiles }
+\usepackage{array}
 
 \newminted{cpp}{ mathescape , linenos, numbersep=5pt, gobble=2,
                  frame=lines, framesep =2mm }
 
 \definecolor{type}{RGB}{176, 5, 64}
 \newcommand{\type}[1]{\textcolor{type}{#1}}
+\definecolor{kw}{RGB}{7, 127, 67}
+\newcommand{\kw}[1]{\textcolor{kw}{#1}}
+
+\newcommand{\vbuf}{\vspace{.5cm}}
+
+% heavier lines
+\def\hlinewd#1{%
+\noalign{\ifnum0=`}\fi\hrule \@height #1 %
+\futurelet\reserved@a\@xhline} 
+\newcommand{\hvline}{\hlinewd{2pt}}
 
 % page properties
 \usepackage[margin=1.5in]{geometry}
@@ -76,4 +87,5 @@
 \pagenumbering{arabic}
 \chapter{Introduction}
 \subfile{lesson1/lesson1.tex}
+\subfile{lesson2/lesson2.tex}
 \end{document}
