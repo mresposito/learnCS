@@ -25,7 +25,7 @@ In this lesson, you will learn how C++ manages memory, and you will gain underst
 Every process inside a computer has a certain amount of memory, which is granted to the process by the operative system. Some of that memory will be reserved to keep some information about the process. That memory cannot be accessed, and is reserved to the operative system.  Then, we have that is called the {\bf stack}. Look at Figure \ref{fig:mstack} to get an idea of how process memory looks like:\\
 \subsubsection{Stack}
 The stack is used in order to keep track of the location where we are inside our process. Imagine that you have a certain number of tasks that you need to do. For every task, we make a post-it, with some information about the task. A task may require you to have to complete a different task before you may be able to solve the previous one, and for every task you need to store some information, relative to the task. How are we going to keep track of all the post-its that we will write? \\
-An excellent way to manage this information is to use a pile. For every post-it that we make, we will push it on top our pile. If the task will require some other task to be completed, then we will begin working on that task, and push the relative post-it on top of our pile. Once a task is completed, then we remove the post-it from the top of our pile, and resume working on the task with the previous post it. When, the pile will be empty again, then our program will be over! \\
+An excellent way to manage this information is to use a pile. For every post-it that we make, we will push it on top our pile. If the task will require some other task to be completed, then we will begin working on that task, and push the relative post-it on top of our pile. Once a task is completed, then we remove the post-it from the top of our pile, and resume working on the task with the previous post-it. When, the pile will be empty again, then our program will be over! \\
 In computers programs, things work in the same way. Instead of tasks we have functions, and our pile is what we refer to as a stack, an abstract data structure. The information that we need in our process are variables, that we need to keep track of in order to complete our tasks. The post-its are the chunks of memory that we use to store that information inside our process. Lets take a look at an example:
 \begin{cppcode}
   int task ( int sum )
@@ -62,14 +62,75 @@ When we use a variable, C++ goes into memory and looks at the value of that vari
   cout <<  look << endl; // will print 5
   cout << &look << endl; // will print some address location.
 \end{cppcode}
-Now, if you have an address, you can either store it, using another variable, or look up the memory inside the value. A variable that stores an address in memory is called a {\bf pointer}. Lets continue looking at the previous example:
+Now, if you have an address, you can either store it, using another variable, or look up the memory inside the value. A variable that stores an address in memory is called a {\bf pointer}. You can lookup values inside pointers by using the {\bf star operator}. Using the star operator to lookup the value of a memory address is called {\bf dereferencing} a pointer. Lets continue looking at the previous example:
 \begin{cppcode}
   int * pointerToLook = &look;
-  cout << * ( & look )    << endl; // will print 5
   cout << * pointerToLook << endl; // will print 5
   cout <<   pointerToLook << endl; // will print some address. Equivalent to $&$ look.
 \end{cppcode}
-So, you can create a pointer variable using the star operator before the name of the variable, and then you can lookup the value inside memory using the star operator. 
+So, you can create a pointer variable using the star operator before the name of the variable, and then you can lookup the value inside memory using the star operator.  Note that the two operatons, are reverse to each other. In fact, if you take the address and then dereference, it will be like doing nothing.
+\begin{cppcode}
+  cout << *(&look ) == look << endl; // will print true
+\end{cppcode}
+You have to be careful whenever you use the star operator. If you follow an address that doesn't exist in memory, then you will get a segmentation fault. That is, the computer will complain that the memory address that you have asked does not exist, therefore it will terminate the program. You have to be careful not to use uninitialized pointers, or pointer that point to \kw{NULL}. Here is an example of segfaults:
+\begin{cppcode}
+  int * a;
+  int * b = NULL;
+  * a = 3; // segfault
+  int c = * b; // seg fault
+\end{cppcode}
+You can use pointers in two different ways. You can either use them to point at existing memory, or make them point at new memory you create for them. Both these cases can be very useful. Lets look at some examples:
+\begin{cppcode}
+  int a = 5;
+  int * aReference = & a;
+  cout << a << endl; // prints 5
+  cout << * aReference << endl; // prints 5
+  * aReference = 8;
+  cout << a << endl; // prints 8
+  cout << * aReference << endl; // prints 8
+  a = 0;
+  cout << a << endl; // prints 0
+  cout << * aReference << endl; // prints 0
+  int c = 39;
+  aReference = & c;
+  cout << a << endl; // prints 0
+  cout << c << endl; // prints 39
+  cout << * aReference << endl; // prints 39
+\end{cppcode}
+Using pointers this way is very useful in case you want to keep allocating new memory for values. Say for example that you have a very large object, and you want to pass it inside a function. Copying the object would be very expensive. With pointers instead, you can simply pass in the address, and then you are done. There are three ways to pass in an object. By value, by reference and by pointer. \\
+By value, it means that you copy over the value of the object you are passing in. This works very well with small object, such as primitive types. The object that is passed in will not change if you change it inside the function, because it is a distinct copy of the value that you have passed in. \\
+Passing in values by reference and by pointers instead will change the value of the object that you pass inside. Both these two methods do not copy the object, but simply pass inside the function the address of the memory object you are passing inside the function. The two methods are fundamentally the same, they are only different in their syntax. Sometimes is more convenient to use reference, other pointer.
+\begin{cppcode}
+  int byValue ( int temp )
+  {
+    temp += 5;
+    return temp - 8;
+  }
+
+  int byReference ( int& temp )
+  {
+    temp += 5;
+    return temp - 8;
+  }
+
+  int byPointer ( int * temp )
+  {
+    * temp += 5;
+    return * temp -8;
+  }
+
+  int main ( int argc, const char * argv[] ) 
+  {
+    int total = 5;
+    cout << byValue     ( total )   << endl; // print 2
+    cout << total                   << endl; // total not changed
+    cout << byReference ( total )   << endl; // print 2
+    cout << total                   << endl; // total changes to 10
+    cout << byPointer   ( & total ) << endl; // print 7
+    cout << total                   << endl; // total changes to 15
+  }
+\end{cppcode}
+Now that we have a good understanding of pointers, lets see how to allocate new memory on a newly declared pointer.
 % subsection Pointers and reference (end)
 \subsection{ Allocating memory in C++ } % (fold)
 \label{sub: Allocating memory in C++ }
